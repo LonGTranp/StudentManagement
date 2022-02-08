@@ -1,4 +1,4 @@
-#include <string> 
+#include <string>
 using namespace std;
 
 struct sinhvien
@@ -9,9 +9,9 @@ struct sinhvien
 };
 typedef struct sinhvien SINHVIEN;
 
-void Nhap(SINHVIEN&, ifstream&);
+void Nhap(SINHVIEN &, ifstream &);
 
-void Nhap(SINHVIEN[], int&, string);
+void Nhap(SINHVIEN[], int &, string);
 
 void Xuat(SINHVIEN, int);
 
@@ -21,9 +21,9 @@ void Menu(SINHVIEN[], int, string);
 
 void MenuInfor();
 
-void ThemSV(SINHVIEN[], int&);
+void ThemSV(SINHVIEN[], int &);
 
-void XoaSV(SINHVIEN[], int&);
+void XoaSV(SINHVIEN[], int &);
 
 void SuaSV(SINHVIEN[], int);
 
@@ -43,4 +43,8 @@ void SapXepTuoi(SINHVIEN[], int, int);
 
 void SapXepDiem(SINHVIEN[], int, int);
 
-void HoanVi(SINHVIEN&, SINHVIEN&);
+void HoanVi(SINHVIEN &, SINHVIEN &);
+
+string getName(string);
+
+void findName(SINHVIEN[], int);

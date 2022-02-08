@@ -99,11 +99,18 @@ void Menu(SINHVIEN a[], int n, string fileName)
 			break;
 		case 9:
 			cout << "[9] Luu lai danh sach sinh vien: \n";
-			cout << "...\nDa luu lai thanh cong.\n";
 			SaveFile(a, n, fileName);
+			cout << "...\nDa luu lai thanh cong.\n";
 			break;
 		case 10:
+			cout << "[10] Tim kiem sinh vien: \n";
+			findName(a, n);
+			break;
+		case 11:
 			on_off = false;
+			break;
+		default:
+			cout << "Thao tac khong hop le.\nVui long nhap lai.\n";
 			break;
 		}
 	}
@@ -121,7 +128,8 @@ void MenuInfor()
 	cout << "|7 - Xoa man hinh hien tai       |\n";
 	cout << "|8 - Tro lai danh sach ban dau   |\n";
 	cout << "|9 - Luu lai danh sach sinh vien |\n";
-	cout << "|10 - Thoat                      |\n";
+	cout << "|10 - Tim kiem sinh vien         |\n";
+	cout << "|11 - Thoat                      |\n";
 	cout << "**********************************\n";
 }
 
@@ -272,6 +280,10 @@ void SapXep(SINHVIEN a[], int n)
 	case 1:
 		SapXepTen(a, n, input2);
 		Xuat(a, n);
+		if (input2 == 1)
+			cout << "\nDa sap xep theo ten A -> Z thanh cong.\n";
+		else
+			cout << "\nDa sap xep theo ten Z -> A thanh cong.\n";
 		break;
 	case 2:
 		SapXepTuoi(a, n, input2);
@@ -297,13 +309,30 @@ void SapXep(SINHVIEN a[], int n)
 
 void SapXepTen(SINHVIEN a[], int n, int k)
 {
-	for (int i = 0; i < n - 1; i++)
+	switch (k)
 	{
-		for (int j = i + 1; j < n; j++)
+	case 1:
+		for (int i = 0; i < n - 1; i++)
 		{
-			if (strcmp(a[i].ten.c_str(), a[j].ten.c_str()) > 0)
-				HoanVi(a[i], a[j]);
+			for (int j = i + 1; j < n; j++)
+			{
+				if (strcmp(getName(a[i].ten).c_str(), getName(a[j].ten).c_str()) > 0)
+					HoanVi(a[i], a[j]);
+			}
 		}
+		break;
+	case 2:
+		for (int i = 0; i < n - 1; i++)
+		{
+			for (int j = i + 1; j < n; j++)
+			{
+				if (strcmp(getName(a[i].ten).c_str(), getName(a[j].ten).c_str()) < 0)
+					HoanVi(a[i], a[j]);
+			}
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -370,4 +399,58 @@ void HoanVi(SINHVIEN &a, SINHVIEN &b)
 	SINHVIEN temp = a;
 	a = b;
 	b = temp;
+}
+
+string getName(string a)
+{
+	string b = "";
+	int k = 0;
+	for (int i = a.size() - 1; i >= 0; i--)
+	{
+		if (a[i] != ' ')
+			k = i;
+		else
+			break;
+	}
+	b = a.substr(k, a.size());
+	return b;
+}
+
+void findName(SINHVIEN a[], int n)
+{
+	SINHVIEN b[200];
+	bool Switch = true;
+	while (Switch)
+	{
+		int input;
+		cout << "\n1. Tim kiem\n";
+		cout << "2. Tro lai\n";
+		cout << "Nhap thao tac: ";
+		cin >> input;
+		int j = 0;
+		string keyWord;
+		switch (input)
+		{
+		case 1:
+			cin.ignore();
+			cout << "Nhap tu khoa can tim kiem: ";
+			getline(cin, keyWord);
+			for (int i = 0; i < n; i++)
+			{
+				int k = a[i].ten.find(keyWord);
+				if (k != -1)
+					b[j++] = a[i];
+			}
+			if (j == 0)
+				cout << "Khong tim thay tu khoa. Vui long nhap tu khoa khac.\n";
+			else
+				Xuat(b, j);
+			break;
+		case 2:
+			Switch = false;
+			break;
+		default:
+			break;
+		}
+	}
 }
